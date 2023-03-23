@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .form {
+        @apply p-4 rounded-lg bg-indigo-500
+    }
+    .form-field-container{
+        @apply p-2 grid grid-cols-4 gap-2 items-center rounded-sm
+    }
+    .form-input{
+        @apply p-2 col-span-3 bg-gray-100 rounded-lg
+    }
+    .form-label{
+        @apply p-1 col-span-1
+    }
+
+    .btn-cyan{
+        @apply px-4 py-2 text-white rounded-sm bg-cyan-500 hover:font-bold
+    }
+    .btn-cyan-outlined{
+        @apply px-4 py-2 text-cyan-500 rounded-sm bg-white border border-cyan-500 hover:font-bold hover:border-2
+    }
+
+    .btn-purple{
+        @apply px-4 py-2 text-white rounded-sm bg-purple-500 hover:font-bold
+    }
+}

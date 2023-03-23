@@ -1,0 +1,19 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block css_resources %}
+{% endblock %}
+
+{% block main %}
+    <section class="container m-auto p-4 bg-gray-200 h-screen flex justify-center items-center">
+        <div class="p-5 rounded-lg bg-white w-2/5 space-y-4">
+            <div class="text-center">
+                welcome to <span class="text-xl font-black text-indigo-500"> Samingo</span>
+            </div>
+            <div class="p-3 text-center">
+                <a href="{% url 'chat_signup' %}" class="btn-cyan m-2"> sing up </a>
+                <a href="" class="btn-cyan-outlined m-2"> login </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
