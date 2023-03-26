@@ -31,3 +31,13 @@ class MessageForm(forms.Form):
     cipher_key = forms.CharField(widget=forms.TextInput(
         attrs={}
     ))
+
+
+class UserLoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class':'form-input'}
+    ),required=True)
+
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class':"form-input"}
+    ))
