@@ -2,15 +2,14 @@ from django.shortcuts import render, redirect
 
 # models
 from .models import User
-
+from django.db import models
 # import form
-from chat.forms import UserForm
+from chat.forms import UserForm, UserLoginForm
 
 # utils
 from cracker.app.security import SecurityPolice
 from cracker.app.Timer import Timer
 from cracker.app.generator import generate_password
-
 
 # Create your views here.
 def index(request):
@@ -18,7 +17,31 @@ def index(request):
 
 
 def login(request):
-    pass
+    user_login_form = UserLoginForm()
+    more_errors = list();
+    if request.method == "POST":
+        user_login_form = UserLoginForm(request.POST, request.FILES)
+        
+        if user_login_form.is_valid():
+            # user = User.objects.filter(email = user_login_form.cleaned_data.get("email")).get()
+
+            try:
+                user = User.objects.filter(email = user_login_form.cleaned_data.get("email")).get()
+            except User.DoesNotExist:
+                user = None
+            # print(user.password, user.email)
+
+            if user and user.password == user_login_form.cleaned_data.get("password"):
+                return redirect("discussions_index")
+            
+            if not user:
+                more_errors.append("user doesn't exist")
+            
+            if user and user.password != user_login_form.cleaned_data.get("password"):
+                more_errors.append("password doesn't match")
+
+    context = {"form":user_login_form, "more_errors":more_errors}
+    return render(request,'chat/auth/login.html',context)
 
 
 def signup(request):
@@ -36,12 +59,13 @@ def signup(request):
             )
             if policy_tester.is_password_respect_policy():
                 user_form.save()
-                # test if the password provided is strong
-                timer = Timer(30)
+                # test if the password provided is strong and return an dict with key is_password_strong
+                timer = Timer(5)
                 result = timer.start_timer(user_form.cleaned_data["password"], generate_password)
                 if not result["is_password_strong"]:
                     user = User.objects.get(user_form.cleaned_data["email"])
                     user.delete()
+                    redirect("password_failed_message")
                 print(result)
 
             else:
@@ -61,3 +85,14 @@ def signup(request):
 
 def logout(request):
     pass
+
+
+def discussions_index(request):
+    """
+        this views is in charge of rendering the index page of discussions with
+        the list of all the users
+    """
+    users = User.objects.all()
+
+    context = {"users" : users}
+    return render(request, "chat/discussions/index.html",context)

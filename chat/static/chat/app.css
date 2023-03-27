@@ -1,0 +1,16 @@
+.container{
+    width: 80%;
+    margin: auto;
+}
+
+.general-grid-4{
+    display: flex;
+}
+
+.grid-item{
+    flex-basis: auto;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 2px;
+}

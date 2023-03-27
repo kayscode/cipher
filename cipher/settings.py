@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,14 +73,17 @@ WSGI_APPLICATION = 'cipher.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# load configuration data from .env
+config = dotenv_values(".env")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cipher',
-        'USER': 'postgres',
-        'PASSWORD': 'qwertysky123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': config.get("DB_NAME"),
+        'USER': config.get("DB_USER"),
+        'PASSWORD': config.get("DB_PASSWORD"),
+        'HOST': config.get("DB_HOST"),
+        'PORT': config.get("DB_PORT"),
     }
 }
 

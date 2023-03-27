@@ -1,0 +1,41 @@
+{% extends 'chat/base.html' %}
+
+{% load static %}
+
+{% block css_resources %}
+    <link rel="stylesheet" href="{% static 'chat/styles.css'%}">
+    <link rel="stylesheet" href="{% static 'chat/app.css'%}">
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <h1> list of users </h1>
+        <div class="">
+            {% if users %}
+                <div class="general-grid-4">
+                    {% for user in users %}
+                        <div class="card-container p-3 grid-item">
+                            <div class="card-header">
+                                    <img src="" alt="non profile image">
+                            </div>
+                            <div class="card-main-body border border-gray-500">
+                                <div>
+                                    <p>
+                                        {{user.first_name}} {{ user.last_name}}
+                                    </p>
+                                </div>
+                                <div class="card-actions">
+                                    <a href="" class="btn-cyan"> start conversation </a>
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section>
+        {#  current conversation #}
+        <h1> current concersation </h1>
+    </section>
+{% endblock %}
